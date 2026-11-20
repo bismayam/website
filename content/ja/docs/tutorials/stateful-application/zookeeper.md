@@ -62,7 +62,7 @@ WALを際限のない増加から防ぐために、ZooKeeperサーバーは、�
 
 以下のマニフェストは[Headless Service](/ja/docs/concepts/services-networking/service/#headless-services)、[Service](/ja/docs/concepts/services-networking/service/)、[PodDisruptionBudget](/docs/concepts/workloads/pods/disruptions/#pod-disruption-budgets)、[StatefulSet](/ja/docs/concepts/workloads/controllers/statefulset/)を含んでいます。
 
-{{% codenew file="application/zookeeper/zookeeper.yaml" %}}
+{{% code_sample file="application/zookeeper/zookeeper.yaml" %}}
 
 ターミナルを開き、マニフェストを作成するために
 [`kubectl apply`](/docs/reference/generated/kubectl/kubectl-commands/#apply)コマンドを使います。
@@ -466,7 +466,7 @@ command:
 …
 ```
 
-このcommandでは、ZooKeeperサーバーを開始するためにコマンドラインパラメータで設定を渡しています。
+このcommandでは、ZooKeeperサーバーを開始するためにコマンドラインパラメーターで設定を渡しています。
 設定をアンサンブルへ渡すのには環境変数を使うこともできます。
 
 ### ログの設定
@@ -1086,7 +1086,7 @@ node "kubernetes-node-ixsl" uncordoned
 
 サービスがメンテナンス中も利用可能なままであることを保証するために、`PodDisruptionBudgets`とあわせて`kubectl drain`を利用できます。
 メンテナンスでノードがオフラインになる前にノードをcordonして、Podを退去させるのにdrainが使われている場合、Disruption Budget(停止状態の予算)を表すサービスは遵守すべきバジェットを持ちます。
-クリティカルサービスでは、Podをすぐに再スケジュールできるよう、追加のキャパティを常に割り当てておくべきです。
+クリティカルサービスでは、Podをすぐに再スケジュールできるよう、追加のキャパシティを常に割り当てておくべきです。
 
 ## {{% heading "cleanup" %}}
 

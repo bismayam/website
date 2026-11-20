@@ -4,6 +4,10 @@ title: "Kubernetes v1.34: Of Wind & Will (O' WaW)"
 date: 2025-08-27T10:30:00-08:00
 evergreen: true
 slug: kubernetes-v1-34-release
+release_announcement:
+  minor_version: "1.34"
+  themes:
+    - "Of Wind & Will (O' WaW)"
 author: >
   [Kubernetes v1.34 Release Team](https://github.com/kubernetes/sig-release/blob/master/releases/release-1.34/release-team.md)
 ---
@@ -45,8 +49,8 @@ Kubernetes v1.34 is packed with new features and improvements. Here are a few se
 
 ### Stable: The core of DRA is GA
 
-[Dynamic Resource Allocation](/docs/concepts/scheduling-eviction/dynamic-resource-allocation/) (DRA) 
-enables more powerful ways to select, allocate, share, and configure 
+[Dynamic Resource Allocation](/docs/concepts/resource-management/dynamic-resource-allocation/) (DRA)
+enables more powerful ways to select, allocate, share, and configure
 GPUs, TPUs, NICs and other devices.
 
 Since the v1.30 release, DRA has been based around claiming devices using 

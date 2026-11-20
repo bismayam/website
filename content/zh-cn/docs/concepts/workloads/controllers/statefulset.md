@@ -121,110 +121,8 @@ The example below demonstrates the components of a StatefulSet.
 
 下面的示例演示了 StatefulSet 的组件。
 
-<!--
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx
-  labels:
-    app: nginx
-spec:
-  ports:
-  - port: 80
-    name: web
-  clusterIP: None
-  selector:
-    app: nginx
----
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: web
-spec:
-  selector:
-    matchLabels:
-      app: nginx # has to match .spec.template.metadata.labels
-  serviceName: "nginx"
-  replicas: 3 # by default is 1
-  minReadySeconds: 10 # by default is 0
-  template:
-    metadata:
-      labels:
-        app: nginx # has to match .spec.selector.matchLabels
-    spec:
-      terminationGracePeriodSeconds: 10
-      containers:
-      - name: nginx
-        image: registry.k8s.io/nginx-slim:0.24
-        ports:
-        - containerPort: 80
-          name: web
-        volumeMounts:
-        - name: www
-          mountPath: /usr/share/nginx/html
-  volumeClaimTemplates:
-  - metadata:
-      name: www
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "my-storage-class"
-      resources:
-        requests:
-          storage: 1Gi
-```
--->
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx
-  labels:
-    app: nginx
-spec:
-  ports:
-  - port: 80
-    name: web
-  clusterIP: None
-  selector:
-    app: nginx
----
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: web
-spec:
-  selector:
-    matchLabels:
-      app: nginx # 必须匹配 .spec.template.metadata.labels
-  serviceName: "nginx"
-  replicas: 3 # 默认值是 1
-  minReadySeconds: 10 # 默认值是 0
-  template:
-    metadata:
-      labels:
-        app: nginx # 必须匹配 .spec.selector.matchLabels
-    spec:
-      terminationGracePeriodSeconds: 10
-      containers:
-      - name: nginx
-        image: registry.k8s.io/nginx-slim:0.24
-        ports:
-        - containerPort: 80
-          name: web
-        volumeMounts:
-        - name: www
-          mountPath: /usr/share/nginx/html
-  volumeClaimTemplates:
-  - metadata:
-      name: www
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "my-storage-class"
-      resources:
-        requests:
-          storage: 1Gi
-```
+
+{{% code_sample file="controllers/statefulset.yaml" %}}
 
 {{< note >}}
 <!--
@@ -611,12 +509,12 @@ StatefulSet 控制器会同时终止并创建最多 `maxUnavailable` 个 Pod（�
 
 A StatefulSet's `.spec.updateStrategy` field allows you to configure
 and disable automated rolling updates for containers, labels, resource request/limits, and
-annotations for the Pods in a StatefulSet. There are two possible values:
+annotations for the Pods in a StatefulSet. There are three possible values:
 -->
 ## 更新策略  {#update-strategies}
 
 StatefulSet 的 `.spec.updateStrategy` 字段让你可以配置和禁用掉自动滚动更新 Pod
-的容器、标签、资源请求或限制、以及注解。有两个允许的值：
+的容器、标签、资源请求或限制、以及注解。有三个允许的值：
 
 <!--
 `OnDelete`
@@ -628,6 +526,14 @@ StatefulSet 的 `.spec.updateStrategy` 字段让你可以配置和禁用掉自�
 `RollingUpdate`
 : The `RollingUpdate` update strategy implements automated, rolling updates for the Pods in a
   StatefulSet. This is the default update strategy.
+
+`Recreate`
+: {{< feature-state feature_gate_name="StatefulSetRecreateStrategy" >}}
+  The `Recreate` update strategy deletes all of the StatefulSet's Pods before creating new
+  Pods that reflect modifications made to a StatefulSet's `.spec.template`. Using this
+  strategy requires the `StatefulSetRecreateStrategy`
+  [feature gate](/docs/reference/command-line-tools-reference/feature-gates/#StatefulSetRecreateStrategy)
+  to be enabled. See [Recreate](#recreate) for details.
 -->
 `OnDelete`
 : 当 StatefulSet 的 `.spec.updateStrategy.type` 设置为 `OnDelete` 时，
@@ -637,6 +543,13 @@ StatefulSet 的 `.spec.updateStrategy` 字段让你可以配置和禁用掉自�
 
 `RollingUpdate`
 : `RollingUpdate` 更新策略对 StatefulSet 中的 Pod 执行自动的滚动更新。这是默认的更新策略。
+
+`Recreate`
+: {{</* feature-state feature_gate_name="StatefulSetRecreateStrategy" */>}}
+  `Recreate` 更新策略会在创建新 Pod 之前删除 StatefulSet 的所有 Pod，新 Pod 将反映对
+  StatefulSet 的 `.spec.template` 所作的修改。使用此策略需要启用 `StatefulSetRecreateStrategy`
+  [特性门控](/zh-cn/docs/reference/command-line-tools-reference/feature-gates/#StatefulSetRecreateStrategy)。
+  详情参见 [Recreate](#recreate)。
 
 <!--
 ## Rolling Updates
@@ -756,6 +669,49 @@ StatefulSet will then begin to recreate the Pods using the reverted template.
 
 恢复模板后，还必须删除 StatefulSet 尝试使用错误的配置来运行的 Pod。这样，
 StatefulSet 才会开始使用被还原的模板来重新创建 Pod。
+
+<!--
+## Recreate
+-->
+## 重新创建 {#recreate}
+
+{{< feature-state feature_gate_name="StatefulSetRecreateStrategy" >}}
+
+<!--
+When a StatefulSet's `.spec.updateStrategy.type` is set to `Recreate`, the StatefulSet
+controller deletes all of the StatefulSet's Pods at once and waits for them to terminate
+completely before creating any new Pods from the updated `.spec.template`. Unlike
+[`RollingUpdate`](#rolling-updates), the old and new revisions of a Pod are never running at
+the same time, so this strategy incurs downtime for the duration of the update. This mirrors
+the `Recreate` strategy of Deployments and is useful for applications that cannot run two
+versions concurrently, such as workloads that require exclusive access to a shared resource
+or that use an on-disk format that is incompatible between versions.
+
+The deletion always removes every Pod together, regardless of the
+[Pod Management Policy](#pod-management-policies). Once all Pods have terminated, the new
+Pods are created according to that policy: with `OrderedReady` (the default) the Pods are
+recreated one at a time, in ascending ordinal order, waiting for each to become Running and
+Ready before creating the next; with `Parallel` all of the Pods are recreated at once.
+
+Because this is an alpha feature, you must enable the `StatefulSetRecreateStrategy`
+[feature gate](/docs/reference/command-line-tools-reference/feature-gates/#StatefulSetRecreateStrategy)
+on the kube-controller-manager and the kube-apiserver to use this strategy.
+-->
+当 StatefulSet 的 `.spec.updateStrategy.type` 被设置为 `Recreate` 时，
+StatefulSet 控制器会一次性删除该 StatefulSet 的所有 Pod，并等待它们完全终止后，
+再基于更新后的 `.spec.template` 创建新的 Pod。与 [`RollingUpdate`](#rolling-updates) 不同，Pod
+的旧版本与新版本永远不会同时运行，因此该策略会在更新期间引入停机时间。该行为与
+Deployment 的 `Recreate` 策略一致，适用于无法同时运行两个版本的应用程序，
+例如需要独占访问共享资源的工作负载，或所用磁盘格式在不同版本之间互不兼容的工作负载。
+
+删除操作总是同时移除所有 Pod，无论 [Pod 管理策略](#pod-management-policies)如何。
+所有 Pod 终止后，将依据该策略创建新 Pod：使用 `OrderedReady`（默认值）时，Pod
+会按序号升序逐一重建，需等待每个 Pod 进入 Running 且 Ready 状态后再创建下一个；使用
+`Parallel` 时，所有 Pod 会一次性重建。
+
+由于这是一项 Alpha 特性，你必须在 kube-controller-manager 和 kube-apiserver
+上启用 `StatefulSetRecreateStrategy`
+[特性门控](/zh-cn/docs/reference/command-line-tools-reference/feature-gates/#StatefulSetRecreateStrategy)才能使用该策略。
 
 <!--
 ## Revision history
@@ -1126,9 +1082,9 @@ the `.spec.replicas` field automatically.
   * Learn how to [scale a StatefulSet](/docs/tasks/run-application/scale-stateful-set/).
   * Learn what's involved when you [delete a StatefulSet](/docs/tasks/run-application/delete-stateful-set/).
   * Learn how to [configure a Pod to use a volume for storage](/docs/tasks/configure-pod-container/configure-volume-storage/).
-  * Learn how to [configure a Pod to use a PersistentVolume for storage](/docs/tasks/configure-pod-container/configure-persistent-volume-storage/).
+  * Learn how to [configure a Pod to use a PersistentVolume for storage](/docs/tutorials/configuration/configure-persistent-volume-storage/).
 * `StatefulSet` is a top-level resource in the Kubernetes REST API.
-  Read the {{< api-reference page="workload-resources/stateful-set-v1" >}}
+  Read the {{< api-reference page="apps/stateful-set-v1" >}}
   object definition to understand the API for stateful sets.
 * Read about [PodDisruptionBudget](/docs/concepts/workloads/pods/disruptions/) and how
   you can use it to manage application availability during disruptions.
@@ -1141,8 +1097,8 @@ the `.spec.replicas` field automatically.
   * 了解如何[扩缩 StatefulSet](/zh-cn/docs/tasks/run-application/scale-stateful-set/)。
   * 了解[删除 StatefulSet](/zh-cn/docs/tasks/run-application/delete-stateful-set/) 涉及到的操作。
   * 了解如何[配置 Pod 以使用卷进行存储](/zh-cn/docs/tasks/configure-pod-container/configure-volume-storage/)。
-  * 了解如何[配置 Pod 以使用 PersistentVolume 作为存储](/zh-cn/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)。
-* `StatefulSet` 是 Kubernetes REST API 中的顶级资源。阅读 {{< api-reference page="workload-resources/stateful-set-v1" >}}
+  * 了解如何[配置 Pod 以使用 PersistentVolume 作为存储](/zh-cn/docs/tutorials/configuration/configure-persistent-volume-storage/)。
+* `StatefulSet` 是 Kubernetes REST API 中的顶级资源。阅读 {{< api-reference page="apps/stateful-set-v1" >}}
   对象定义理解关于该资源的 API。
 * 阅读 [Pod 干扰预算（Disruption Budget）](/zh-cn/docs/concepts/workloads/pods/disruptions/)，
   了解如何在干扰下运行高度可用的应用。

@@ -66,9 +66,12 @@ prior to submitting new content. The information details follow.
   using [Hugo](https://gohugo.io/).
 - Kubernetes documentation uses [CommonMark](https://commonmark.org/) as its flavor of  Markdown. 
 - The source is in [GitHub](https://github.com/kubernetes/website). You can find
-  Kubernetes documentation at `/content/en/docs/`. Some of the reference
-  documentation is automatically generated from scripts in
-  the `update-imported-docs/` directory.
+  Kubernetes documentation at `/content/en/docs/`. Some reference documentation
+  is generated with tools from the
+  [kubernetes-sigs/reference-docs](https://github.com/kubernetes-sigs/reference-docs)
+  repository. See the
+  [reference documentation section](/docs/contribute/generate-ref-docs/)
+  for the available generation guides.
 - [Page content types](/docs/contribute/style/page-content-types/) describe the
   presentation of documentation content in Hugo.
 - You can use [Docsy shortcodes](https://www.docsy.dev/docs/adding-content/shortcodes/) or [custom Hugo shortcodes](/docs/contribute/style/hugo-shortcodes/) to contribute to Kubernetes documentation.
@@ -88,8 +91,8 @@ prior to submitting new content. The information details follow.
 ### Sign the CNCF CLA {#sign-the-cla}
 
 All Kubernetes contributors **must** read
-the [Contributor guide](https://github.com/kubernetes/community/blob/master/contributors/guide/README.md)
-and [sign the Contributor License Agreement (CLA)](https://github.com/kubernetes/community/blob/master/CLA.md)
+the [Contributor guide](https://github.com/kubernetes/community/blob/main/contributors/guide/README.md)
+and [sign the Contributor License Agreement (CLA)](https://github.com/kubernetes/community/blob/main/CLA.md)
 .
 
 Pull requests from contributors who haven't signed the CLA fail the automated

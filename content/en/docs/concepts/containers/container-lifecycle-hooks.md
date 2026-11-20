@@ -12,9 +12,6 @@ weight: 40
 This page describes how kubelet managed Containers can use the Container lifecycle hook framework
 to run code triggered by events during their management lifecycle.
 
-
-
-
 <!-- body -->
 
 ## Overview
@@ -31,8 +28,16 @@ There are two hooks that are exposed to Containers:
 `PostStart`
 
 This hook is executed immediately after a container is created.
-It is unspecified whether the hook will execute before or after the container ENTRYPOINT.
+It runs **concurrently** with the container's `ENTRYPOINT` (main process),
+meaning the hook may run before, during, or after the main process starts.
+
 No parameters are passed to the handler.
+
+{{< note >}}
+While the hook runs concurrently with the container process,
+it can delay container status updates;
+the container may not transition to `Running` until the hook completes.
+{{< /note >}}
 
 `PreStop`
 
@@ -45,7 +50,7 @@ the handler, the container will eventually terminate within the Pod's terminatio
 parameters are passed to the handler.
 
 A more detailed description of the termination behavior can be found in
-[Termination of Pods](/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination).
+[Termination of Pods](/docs/concepts/workloads/pods/pod-termination/).
 
 `StopSignal`
 
@@ -53,7 +58,7 @@ The StopSignal lifecycle can be used to define a stop signal which would be sent
 stopped. If you set this, it overrides any `STOPSIGNAL` instruction defined within the container image.
 
 A more detailed description of termination behaviour with custom stop signals can be found in
-[Stop Signals](/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination-stop-signals).
+[Stop Signals](/docs/concepts/workloads/pods/pod-termination/#pod-termination-stop-signals).
 
 ### Hook handler implementations
 

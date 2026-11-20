@@ -89,7 +89,7 @@ nodes, and/or deploy many workloads that heavily utilize DRA defined resource
 claims, the cluster administrator should configure the relevant components to
 anticipate the increased load. 
 
-The effects of mistuned components can have direct or snowballing affects
+The effects of mistuned components can have direct or snowballing effects
 causing different symptoms during the Pod lifecycle. If the `kube-scheduler`
 component's QPS and burst configurations are too low, the scheduler might
 quickly identify a suitable node for a Pod but take longer to bind the Pod to
@@ -99,7 +99,7 @@ client-go configuration within `kube-controller-manager` are critical.
 The specific values to tune your cluster to depend on a variety of factors like
 number of nodes/pods, rate of pod creation, churn, even in non-DRA environments;
 see the [SIG Scalability README on Kubernetes scalability
- thresholds](https://github.com/kubernetes/community/blob/master/sig-scalability/configs-and-limits/thresholds.md)
+ thresholds](https://github.com/kubernetes/community/blob/main/sig-scalability/configs-and-limits/thresholds.md)
 for more information. In scale tests performed against a DRA enabled cluster
 with 100 nodes, involving 720 long-lived pods (90% saturation) and 80 churn pods
 (10% churn, 10 times), with a job creation QPS of 10, `kube-controller-manager`
@@ -133,7 +133,7 @@ high Workqueue Work Duration, this suggests the controller isn't performing
 optimally. Consider tuning parameters like QPS, burst, and CPU/memory
 configurations.
 
-If you are experiencing high Workequeue Add Rate, high Workqueue Depth, but
+If you are experiencing high Workqueue Add Rate, high Workqueue Depth, but
 reasonable Workqueue Work Duration, this indicates the controller is processing
 work, but concurrency might be insufficient. Concurrency is hardcoded in the
 controller, so as a cluster administrator, you can tune for this by reducing the
@@ -146,7 +146,7 @@ The following scheduler metrics are high level metrics aggregating performance
 across all Pods scheduled, not just those using DRA. It is important to note
 that the end-to-end metrics are ultimately influenced by the
 `kube-controller-manager`'s performance in creating ResourceClaims from
-ResourceClainTemplates in deployments that heavily use ResourceClainTemplates.
+ResourceClaimTemplates in deployments that heavily use ResourceClaimTemplates.
 
 * Scheduler End-to-End Duration: Monitor {{< highlight promql "hl_inline=true" >}}histogram_quantile(0.99,
   sum(increase(scheduler_pod_scheduling_sli_duration_seconds_bucket[5m])) by
@@ -189,6 +189,6 @@ metrics.
 ## {{% heading "whatsnext" %}}
 
 * [Learn more about
-  DRA](/docs/concepts/scheduling-eviction/dynamic-resource-allocation/)
+  DRA](/docs/concepts/resource-management/dynamic-resource-allocation/)
 * Read the [Kubernetes Metrics
 Reference](/docs/reference/instrumentation/metrics/)

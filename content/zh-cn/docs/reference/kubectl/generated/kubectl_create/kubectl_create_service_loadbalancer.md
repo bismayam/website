@@ -2,12 +2,16 @@
 title: kubectl create service loadbalancer
 content_type: tool-reference
 weight: 30
+description: >-
+  创建 LoadBalancer 类型 Service
 ---
 <!--
 title: kubectl create service loadbalancer
 content_type: tool-reference
 weight: 30
 auto_generated: true
+description: >-
+  Create a LoadBalancer service
 -->
 
 ## {{% heading "synopsis" %}}
@@ -44,7 +48,7 @@ kubectl create service loadbalancer my-lbs --tcp=5678:8080
 <tbody>
 
 <tr>
-<td colspan="2">--allow-missing-template-keys&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: true</td>
+<td colspan="2">--allow-missing-template-keys&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值：true</td>
 </tr>
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
@@ -59,10 +63,11 @@ If true, ignore any errors in templates when a field or map key is missing in th
 </tr>
 
 <tr>
-<td colspan="2">--dry-run string[="unchanged"]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default: "none"</td>
+<td colspan="2">--dry-run string[="unchanged"]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："none"</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<td></td>
+<td style="line-height: 130%; word-wrap: break-word;">
 <p>
 <!--
 Must be &quot;none&quot;, &quot;server&quot;, or &quot;client&quot;. If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource.
@@ -77,7 +82,8 @@ Must be &quot;none&quot;, &quot;server&quot;, or &quot;client&quot;. If client s
 <td colspan="2">--field-manager string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: "kubectl-create"-->默认："kubectl-create"</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<td></td>
+<td style="line-height: 130%; word-wrap: break-word;">
 <p>
 <!--
 Name of the manager used to track field ownership.
@@ -91,7 +97,8 @@ Name of the manager used to track field ownership.
 <td colspan="2">-h, --help</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<td></td>  
+<td style="line-height: 130%; word-wrap: break-word;">  
 <p>
 <!--
 help for loadbalancer
@@ -105,7 +112,8 @@ help for loadbalancer
 <td colspan="2">-o, --output string</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<td></td>  
+<td style="line-height: 130%; word-wrap: break-word;">  
 <p>
 <!--
 Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
@@ -120,7 +128,8 @@ json、yaml、kyaml、name、go-template、go-template-file、template、templat
 <td colspan="2">--save-config</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<td></td>  
+<td style="line-height: 130%; word-wrap: break-word;">  
 <p>
 <!--
 If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
@@ -135,7 +144,8 @@ If true, the configuration of current object will be saved in its annotation. Ot
 <td colspan="2">--show-managed-fields</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<td></td>  
+<td style="line-height: 130%; word-wrap: break-word;">  
 <p>
 <!--
 If true, keep the managedFields when printing objects in JSON or YAML format.
@@ -149,7 +159,8 @@ If true, keep the managedFields when printing objects in JSON or YAML format.
 <td colspan="2">--tcp strings</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<td></td>  
+<td style="line-height: 130%; word-wrap: break-word;">  
 <p>
 <!--
 Port pairs can be specified as '&lt;port&gt;:&lt;targetPort&gt;'.
@@ -163,7 +174,8 @@ Port pairs can be specified as '&lt;port&gt;:&lt;targetPort&gt;'.
 <td colspan="2">--template string</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<td></td>  
+<td style="line-height: 130%; word-wrap: break-word;">  
 <p>
 <!--
 Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
@@ -254,9 +266,9 @@ UID to impersonate for the operation.
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
 <p>
-<!--  
+<!--
 User extras to impersonate for the operation, this flag can be repeated to specify multiple values for the same key.
---> 
+-->
 用户额外信息，用于伪装操作，此标志可以重复使用，为同一个键指定多个值。
 </p>
 </td>
@@ -441,7 +453,8 @@ If present, the namespace scope for this CLI request
 Password for basic authentication to the API server
 -->
 对 API 服务器进行基本身份验证所用的密码。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
@@ -454,7 +467,8 @@ Password for basic authentication to the API server
 Name of profile to capture. One of (none|cpu|heap|goroutine|threadcreate|block|mutex|trace)
 -->
 要记录的性能分析信息。可选值为（none|cpu|heap|goroutine|threadcreate|block|mutex|trace）。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
@@ -471,6 +485,20 @@ Name of the file to write the profile to
 </tr>
 
 <tr>
+<td colspan="2">--proxy-url string</td>
+</tr>
+<tr>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>  
+<!--  
+Proxy URL to use for requests to the API server
+-->
+用于向 API 服务器发送请求的代理 URL。
+</p>  
+</td>
+</tr>
+
+<tr>
 <td colspan="2">--request-timeout string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："0"</td>
 </tr>
 <tr>
@@ -481,175 +509,204 @@ The length of time to wait before giving up on a single server request. Non-zero
 -->
 在放弃某个服务器请求之前等待的时长。非零值应包含相应的时间单位（例如 1s、2m、3h）。
 值为零表示请求不会超时。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">-s, --server string</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>
 <!--
 The address and port of the Kubernetes API server
 -->
 Kubernetes API 服务器的地址和端口。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--storage-driver-buffer-duration duration&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值：1m0s</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>
 <!--
 Writes in the storage driver will be buffered for this duration, and committed to the non memory backends as a single transaction
 -->
 对存储驱动的写入操作将被缓存的时长；缓存的操作会作为一个事务提交给非内存后端。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--storage-driver-db string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："cadvisor"</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>
 <!--
 database name
 -->
 数据库名称。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--storage-driver-host string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："localhost:8086"</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>
 <!--
 database host:port
 -->
 数据库 host:port
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--storage-driver-password string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："root"</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>
 <!--
 database password
 -->
 数据库密码。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--storage-driver-secure</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>
 <!--
 use secure connection with database
 -->
 使用与数据库的安全连接。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--storage-driver-table string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："stats"</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>
 <!--
 table name
 -->
 表名。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--storage-driver-user string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："root"</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>
 <!--
 database username
 -->
 数据库用户名。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--tls-server-name string</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>
 <!--
 Server name to use for server certificate validation. If it is not provided, the hostname used to contact the server is used
 -->
 服务器证书验证所用的服务器名称。如果未提供，则使用与服务器通信所用的主机名。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--token string</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>
 <!--
 Bearer token for authentication to the API server
 -->
 向 API 服务器进行身份验证的持有者令牌。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--user string</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>
 <!--
 The name of the kubeconfig user to use
 -->
 要使用的 kubeconfig 用户的名称。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--username string</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>  
 <!--
 Username for basic authentication to the API server
 -->
 对 API 服务器进行基本身份验证时所用的用户名。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--version version[=true]</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>  
 <!--
 --version, --version=raw prints version information and quits; --version=vX.Y.Z... sets the reported version
 -->
 --version, --version=raw 打印版本信息并退出；--version=vX.Y.Z... 设置报告的版本。
-</p></td>
+</p>  
+</td>
 </tr>
 
 <tr>
 <td colspan="2">--warnings-as-errors</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>  
 <!--
 Treat warnings received from the server as errors and exit with a non-zero exit code
 -->
 将从服务器收到的警告视为错误，并以非零退出码退出。
-</p></td>
+</p>  
+</td>
 </tr>
 
 </tbody>

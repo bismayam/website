@@ -3,6 +3,10 @@ layout: blog
 title: "Kubernetes v1.26: Electrifying"
 date: 2022-12-09
 slug: kubernetes-v1-26-release
+release_announcement:
+  minor_version: "1.26"
+  themes:
+    - "Electrifying"
 author: >
   [Kubernetes 1.26 Release Team](https://github.com/kubernetes/sig-release/blob/master/releases/release-1.26/release-team.md)
 ---
@@ -162,7 +166,7 @@ by checking the component's metric endpoint for `kubernetes_feature_enabled`.
 ### Dynamic Resource Allocation graduates to alpha
 
 [Dynamic Resource
-Allocation](/docs/concepts/scheduling-eviction/dynamic-resource-allocation/)
+Allocation](/docs/concepts/resource-management/dynamic-resource-allocation/)
 is a [new feature](https://github.com/kubernetes/enhancements/blob/master/keps/sig-node/3063-dynamic-resource-allocation/README.md) 
 that puts resource scheduling in the hands of third-party developers: it offers an
 alternative to the limited "countable" interface for requesting access to resources

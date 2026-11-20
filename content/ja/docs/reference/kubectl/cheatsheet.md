@@ -49,7 +49,7 @@ KUBECONFIG=~/.kube/config:~/.kube/kubconfig2
 
 kubectl config view
 
-# e2eユーザのパスワードを取得します。
+# e2eユーザーのパスワードを取得します。
 kubectl config view -o jsonpath='{.users[?(@.name == "e2e")].user.password}'
 
 kubectl config view -o jsonpath='{.users[].name}'    # 最初のユーザー名を表示します
@@ -370,7 +370,7 @@ kubectl get pods -A -o=custom-columns='DATA:metadata.*'
 kubectlに関するより多くのサンプルは[カスタムカラムのリファレンス](/ja/docs/reference/kubectl/#custom-columns)を参照してください。
 
 ### Kubectlのログレベルとデバッグ
-kubectlのログレベルは、レベルを表す整数が後に続く`-v`または`--v`フラグで制御されます。一般的なKubernetesのログ記録規則と関連するログレベルについて、[こちら](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-instrumentation/logging.md)で説明します。
+kubectlのログレベルは、レベルを表す整数が後に続く`-v`または`--v`フラグで制御されます。一般的なKubernetesのログ記録規則と関連するログレベルについて、[こちら](https://github.com/kubernetes/community/blob/main/contributors/devel/sig-instrumentation/logging.md)で説明します。
 
 ログレベル    | 説明
 --------------| -----------
@@ -378,7 +378,7 @@ kubectlのログレベルは、レベルを表す整数が後に続く`-v`また
 `--v=1`       | ログレベルが必要ない場合に、妥当なデフォルトのログレベルです
 `--v=2`       | サービスに関する重要な定常状態情報と、システムの重要な変更に関連する可能性がある重要なログメッセージを表示します。 これは、ほとんどのシステムで推奨されるデフォルトのログレベルです。
 `--v=3`       | 変更に関するより詳細なログレベルを表示します
-`--v=4`       | デバックにむいたログレベルで表示します
+`--v=4`       | デバッグに向いたログレベルで表示します
 `--v=6`       | 要求されたリソースを表示します
 `--v=7`       | HTTPリクエストのヘッダを表示します
 `--v=8`       | HTTPリクエストのコンテンツを表示します

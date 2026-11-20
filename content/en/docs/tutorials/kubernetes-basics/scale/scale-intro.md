@@ -7,6 +7,18 @@ weight: 10
 
 * Scale an existing app manually using kubectl.
 
+## {{% heading "prerequisites" %}}
+
+The shell commands in this tutorial use POSIX shell syntax, which is supported by
+the default shells on most Linux and macOS systems (for example, bash, zsh, or sh).
+Windows users must use a POSIX-compatible shell such as
+[Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install)
+or [Git Bash](https://gitforwindows.org/) to run the commands as written.
+Commands that use `export`, `$()`, and similar constructs are **not** compatible
+with PowerShell or the Windows Command Prompt.
+
+
+
 ## Scaling an application
 
 {{% alert %}}
@@ -24,7 +36,7 @@ If you haven't worked through the earlier sections, start from
 
 _Scaling_ is accomplished by changing the number of replicas in a Deployment.
 
-{{< note >}}
+{{< alert color="info" title="Note" >}}
 If you are trying this after the
 [previous section](/docs/tutorials/kubernetes-basics/expose/expose-intro/), then you
 may have deleted the service you created, or have created a Service of `type: NodePort`.
@@ -39,7 +51,7 @@ with its `type` set to `LoadBalancer`:
 ```shell
 kubectl expose deployment/kubernetes-bootcamp --type="LoadBalancer" --port 8080
 ```
-{{< /note >}}
+{{< /alert >}}
 
 ## Scaling overview
 
@@ -90,7 +102,7 @@ kubernetes-bootcamp   1/1     1            1           11m
 We should have 1 Pod. If not, run the command again. This shows:
 
 * _NAME_ lists the names of the Deployments in the cluster.
-* _READY_ shows the ratio of CURRENT/DESIRED replicas
+* _READY_ shows the ratio of READY/DESIRED replicas.
 * _UP-TO-DATE_ displays the number of replicas that have been updated to achieve the desired state.
 * _AVAILABLE_ displays how many replicas of the application are available to your users.
 * _AGE_ displays the amount of time that the application has been running.
@@ -174,7 +186,7 @@ Hello Kubernetes bootcamp! | Running on: kubernetes-bootcamp-644c5687f4-wp67j | 
 Hello Kubernetes bootcamp! | Running on: kubernetes-bootcamp-644c5687f4-4hjvf | v=1
 ```
 
-{{< note >}}
+{{< alert color="info" title="Note" >}}
 If you're running minikube with Docker Desktop as the container driver, a minikube
 tunnel is needed. This is because containers inside Docker Desktop are isolated
 from your host computer.
@@ -197,7 +209,7 @@ Then use the given URL to access the app:
 ```shell
 curl 127.0.0.1:51082
 ```
-{{< /note >}}
+{{< /alert >}}
 
 ### Scale Down
 

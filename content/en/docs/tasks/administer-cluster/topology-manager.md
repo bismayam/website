@@ -136,14 +136,9 @@ alignments produced by the Topology Manager on different occasions:
 * all containers can be and are allocated to a single NUMA node;
 * all containers can be and are allocated to a shared set of NUMA nodes.
 
-The total amount of particular resource demanded for the entire pod is calculated according to
-[effective requests/limits](/docs/concepts/workloads/pods/init-containers/#resource-sharing-within-containers)
-formula, and thus, this total value is equal to the maximum of:
-
-* the sum of all app container requests,
-* the maximum of init container requests,
-
-for a resource.
+The total amount of particular resource demanded for the entire pod is calculated according to the
+[effective requests/limits](/docs/concepts/resource-management/effective-pod-requests-limits/)
+formula.
 
 Using the `pod` scope in tandem with `single-numa-node` Topology Manager policy is specifically
 valuable for workloads that are latency sensitive or for high-throughput applications that perform
@@ -271,7 +266,7 @@ lack of data, using this policy option with Kubernetes {{< skew currentVersion >
 at your own risk.
 {{< /note >}}
 
-You can enable this option by adding `max-allowable-numa-nodes=true` to the Topology Manager policy options.
+You can enable this option by adding `max-allowable-numa-nodes=<integer>` to the Topology Manager policy options, where the integer value must be greater than 8. The default is 8, which preserves the existing limit.
 
 Setting a value of `max-allowable-numa-nodes` does not (in and of itself) affect the
 latency of pod admission, but binding a Pod to a (Kubernetes) node with many NUMA does have an impact.
@@ -395,3 +390,7 @@ assignments.
 
 1. The scheduler is not topology-aware, so it is possible to be scheduled on a node and then fail
    on the node due to the Topology Manager.
+
+## {{% heading "whatsnext" %}}
+
+- Read about [Pod-level resource managers](/docs/concepts/resource-management/resource-managers/#pod-level-resource-managers).

@@ -376,7 +376,7 @@ GAになってからさらなる変更を加えることは現実的ではない
 - `CSIMigrationOpenStack`: シムと変換ロジックを有効にしてボリューム操作をKubernetesリポジトリー内のCinderプラグインからCinder CSIプラグインにルーティングします。ノードにCinder CSIプラグインがインストールおよび設定されていない場合、ツリー内のCinderプラグインへのフォールバックをサポートします。CSIMigration機能フラグを有効にする必要があります。
 - `CSIMigrationOpenStackComplete`: Cinderのツリー内プラグインのkubeletおよびボリュームコントローラーへの登録を停止し、シムと変換ロジックがCinderのツリー内プラグインからCinder CSIプラグインにボリューム操作をルーティングできるようにします。CSIMigrationおよびCSIMigrationOpenStack機能フラグを有効にし、クラスター内のすべてのノードにCinder CSIプラグインをインストールおよび設定する必要があります。
 - `CSINodeInfo`: csi.storage.k8s.ioのCSINodeInfo APIオブジェクトに関連するすべてのロジックを有効にします。
-- `CSIPersistentVolume`: [CSI(Container Storage Interface)](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/storage/container-storage-interface.md)互換のボリュームプラグインを通してプロビジョニングされたボリュームの検出とマウントを有効にします。
+- `CSIPersistentVolume`: [CSI(Container Storage Interface)](https://github.com/kubernetes/community/blob/main/contributors/design-proposals/storage/container-storage-interface.md)互換のボリュームプラグインを通してプロビジョニングされたボリュームの検出とマウントを有効にします。
   詳細については[`csi`ボリュームタイプ](/docs/concepts/storage/volumes/#csi)ドキュメントを確認してください。
 - `CustomCPUCFSQuotaPeriod`: ノードがCPUCFSQuotaPeriodを変更できるようにします。
 - `CustomPodDNS`: `dnsConfig`プロパティを使用したPodのDNS設定のカスタマイズを有効にします。詳細は[PodのDNS構成](/ja/docs/concepts/services-networking/dns-pod-service/#pods-dns-config)で確認できます。
@@ -447,7 +447,7 @@ GAになってからさらなる変更を加えることは現実的ではない
 - `SupportIPVSProxyMode`: IPVSを使用したクラスター内サービスの負荷分散の提供を有効にします。詳細は[サービスプロキシ](/ja/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies)で確認できます。
 - `SupportPodPidsLimit`: PodのPID制限のサポートを有効にします。
 - `Sysctls`: 各Podに設定できる名前空間付きのカーネルパラメーター(sysctl)のサポートを有効にします。詳細は[sysctls](/docs/tasks/administer-cluster/sysctl-cluster/)で確認できます。
-- `TaintBasedEvictions`: ノードのTaintとPodのTolerationに基づいてノードからPodを排除できるようにします。。詳細は[TaintとToleration](/docs/concepts/scheduling-eviction/taint-and-toleration/)で確認できます。
+- `TaintBasedEvictions`: ノードのTaintとPodのTolerationに基づいてノードからPodを排除できるようにします。詳細は[TaintとToleration](/docs/concepts/scheduling-eviction/taint-and-toleration/)で確認できます。
 - `TaintNodesByCondition`: [ノードの条件](/ja/docs/concepts/architecture/nodes/#condition)に基づいてノードの自動Taintを有効にします。
 - `TokenRequest`: サービスアカウントリソースで`TokenRequest`エンドポイントを有効にします。
 - `TokenRequestProjection`: [Projectedボリューム](/docs/concepts/storage/volumes/#projected)を使用したPodへのサービスアカウントのトークンの注入を有効にします。

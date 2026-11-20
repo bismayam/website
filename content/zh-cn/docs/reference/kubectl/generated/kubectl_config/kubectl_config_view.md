@@ -2,12 +2,16 @@
 title: kubectl config view
 content_type: tool-reference
 weight: 30
+description: >-
+  显示合并的 kubeconfig 配置或指定的 kubeconfig 文件
 ---
 <!--
 title: kubectl config view
 content_type: tool-reference
 weight: 30
 auto_generated: true
+description: >-
+  Display merged kubeconfig settings or a specified kubeconfig file
 -->
 
 ## {{% heading "synopsis" %}}
@@ -28,17 +32,24 @@ kubectl config view [flags]
 ## {{% heading "examples" %}}
 
 <!--
+```
 # Show merged kubeconfig settings
+kubectl config view
+
 # Show merged kubeconfig settings, raw certificate data, and exposed secrets
+kubectl config view --raw
+
 # Get the password for the e2e user
+kubectl config view -o jsonpath='{.users[?(@.name == "e2e")].user.password}'
+```
 -->
 ```shell
 # 显示合并的 kubeconfig 设置
 kubectl config view
-  
+
 # 显示合并的 kubeconfig 设置、原始证书数据和公开的密钥
 kubectl config view --raw
-  
+
 # 获取 e2e 用户的密码
 kubectl config view -o jsonpath='{.users[?(@.name == "e2e")].user.password}'
 ```
@@ -53,7 +64,7 @@ kubectl config view -o jsonpath='{.users[?(@.name == "e2e")].user.password}'
 <tbody>
 
 <tr>
-<td colspan="2">--allow-missing-template-keys&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: true-->默认值：true</td>
+<td colspan="2">--allow-missing-template-keys&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值：true</td>
 </tr>
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
@@ -61,8 +72,8 @@ kubectl config view -o jsonpath='{.users[?(@.name == "e2e")].user.password}'
 <!--
 If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
 -->
-如果为 true，在模板中字段或映射键缺失时忽略模板中的错误。
-仅适用于 golang 和 jsonpath 输出格式。
+如果为 <code>true</code>，则在模板中字段或映射键缺失时忽略模板中的错误。
+仅适用于 <code>golang</code> 和 <code>jsonpath</code> 输出格式。
 </p>
 </td>
 </tr>
@@ -90,13 +101,13 @@ Flatten the resulting kubeconfig file into self-contained output (useful for cre
 <!--
 help for view
 -->
-关于 view 的帮助信息。
+关于 <code>view</code> 的帮助信息。
 </p>
 </td>
 </tr>
 
 <tr>
-<td colspan="2">--merge tristate[=true]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: true-->默认值：true</td>
+<td colspan="2">--merge tristate[=true]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值：true</td>
 </tr>
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
@@ -124,7 +135,7 @@ Remove all information not used by current-context from the output
 </tr>
 
 <tr>
-<td colspan="2">-o, --output string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: "yaml"-->默认值："yaml"</td>
+<td colspan="2">-o, --output string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："yaml"</td>
 </tr>
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
@@ -161,7 +172,7 @@ Display raw byte data and sensitive data
 <!--
 If true, keep the managedFields when printing objects in JSON or YAML format.
 -->
-如果为 true，则在以 JSON 或 YAML 格式打印对象时保留 managedFields。
+如果为 <code>true</code>，则在以 JSON 或 YAML 格式打印对象时保留 managedFields。
 </p>
 </td>
 </tr>
@@ -175,7 +186,7 @@ If true, keep the managedFields when printing objects in JSON or YAML format.
 <!--
 Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
 -->
-当指定 <code>-o=go-template</code> 、<code>-o=go-template-file</code> 时使用的模板字符串或模板文件路径。
+当指定 <code>-o=go-template</code>、<code>-o=go-template-file</code> 时使用的模板字符串或模板文件路径。
 模板格式为 golang 模板 [http://golang.org/pkg/text/template/#pkg-overview]。
 </p>
 </td>
@@ -250,7 +261,7 @@ User extras to impersonate for the operation, this flag can be repeated to speci
 </tr>
 
 <tr>
-<td colspan="2">--cache-dir string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: "$HOME/.kube/cache"-->默认值："$HOME/.kube/cache"</td>
+<td colspan="2">--cache-dir string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："$HOME/.kube/cache"</td>
 </tr>
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
@@ -342,7 +353,7 @@ The name of the kubeconfig context to use
 <!--
 If true, opt-out of response compression for all requests to the server
 -->
-如果为 true，则对服务器所有请求的响应不再压缩。
+如果为 <code>true</code>，则对服务器所有请求的响应不再压缩。
 </p>
 </td>
 </tr>
@@ -356,7 +367,7 @@ If true, opt-out of response compression for all requests to the server
 <!--
 If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure
 -->
-如果为 true，则不检查服务器证书的有效性。这将使你的 HTTPS 连接不安全。
+如果为 <code>true</code>，则不检查服务器证书的有效性。这将使你的 HTTPS 连接不安全。
 </p>
 </td>
 </tr>
@@ -384,8 +395,8 @@ CLI 请求要使用的 kubeconfig 文件的路径。
 <!--
 Path to the kuberc file to use for preferences. This can be disabled by exporting KUBECTL_KUBERC=false feature gate or turning off the feature KUBERC=off.
 -->
-用于偏好设置的 kuberc 文件的路径。可以通过导出 KUBECTL_KUBERC=false
-特性门控或关闭 KUBERC=off 特性门控来禁用此功能。
+用于偏好设置的 kuberc 文件的路径。可以通过导出 <code>KUBECTL_KUBERC=false</code>
+特性门控或关闭 <code>KUBERC=off</code> 特性门控来禁用此功能。
 </p>
 </td>
 </tr>
@@ -433,7 +444,7 @@ Password for basic authentication to the API server
 </tr>
 
 <tr>
-<td colspan="2">--profile string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: "none"-->默认值："none"</td>
+<td colspan="2">--profile string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："none"</td>
 </tr>
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
@@ -441,13 +452,13 @@ Password for basic authentication to the API server
 <!--
 Name of profile to capture. One of (none|cpu|heap|goroutine|threadcreate|block|mutex|trace)
 -->
-要记录的性能分析信息。可选值为（none|cpu|heap|goroutine|threadcreate|block|mutex|trace）。
+要记录的性能分析信息。可选值为（<code>none|cpu|heap|goroutine|threadcreate|block|mutex|trace</code>）。
 </p>
 </td>
 </tr>
 
 <tr>
-<td colspan="2">--profile-output string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: "profile.pprof"-->默认值："profile.pprof"</td>
+<td colspan="2">--profile-output string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："profile.pprof"</td>
 </tr>
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
@@ -461,7 +472,21 @@ Name of the file to write the profile to
 </tr>
 
 <tr>
-<td colspan="2">--request-timeout string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: "0"-->默认值："0"</td>
+<td colspan="2">--proxy-url string</td>
+</tr>
+<tr>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>  
+<!--  
+Proxy URL to use for requests to the API server
+-->
+用于向 API 服务器发送请求的代理 URL。
+</p>  
+</td>  
+</tr>
+
+<tr>
+<td colspan="2">--request-timeout string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："0"</td>
 </tr>
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
@@ -490,7 +515,7 @@ Kubernetes API 服务器的地址和端口。
 </tr>
 
 <tr>
-<td colspan="2">--storage-driver-buffer-duration duration&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: 1m0s-->默认值：1m0s</td>
+<td colspan="2">--storage-driver-buffer-duration duration&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值：1m0s</td>
 </tr>
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
@@ -504,7 +529,7 @@ Writes in the storage driver will be buffered for this duration, and committed t
 </tr>
 
 <tr>
-<td colspan="2">--storage-driver-db string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: "cadvisor"-->默认值："cadvisor"</td>
+<td colspan="2">--storage-driver-db string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："cadvisor"</td>
 </tr>
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
@@ -518,23 +543,25 @@ database name
 </tr>
 
 <tr>
-<td colspan="2">--storage-driver-host string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: "localhost:8086"-->默认值："localhost:8086"</td>
+<td colspan="2">--storage-driver-host string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："localhost:8086"</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">  
+<p>  
 <!--
 database host:port
 -->
-数据库 host:port。
+数据库 <code>host:port</code> 。
 </p>
 </td>
 </tr>
 
 <tr>
-<td colspan="2">--storage-driver-password string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: "root"-->默认值："root"</td>
+<td colspan="2">--storage-driver-password string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："root"</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">  
+<p>  
 <!--
 database password
 -->
@@ -547,7 +574,8 @@ database password
 <td colspan="2">--storage-driver-secure</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">  
+<p>  
 <!--
 use secure connection with database
 -->
@@ -557,10 +585,11 @@ use secure connection with database
 </tr>
 
 <tr>
-<td colspan="2">--storage-driver-table string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: "stats"-->默认值："stats"</td>
+<td colspan="2">--storage-driver-table string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："stats"</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">  
+<p>  
 <!--
 table name
 -->
@@ -570,10 +599,11 @@ table name
 </tr>
 
 <tr>
-<td colspan="2">--storage-driver-user string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default: "root"-->默认值："root"</td>
+<td colspan="2">--storage-driver-user string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："root"</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">  
+<p>  
 <!--
 database username
 -->
@@ -600,7 +630,8 @@ Server name to use for server certificate validation. If it is not provided, the
 <td colspan="2">--token string</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">  
+<p>  
 <!--
 Bearer token for authentication to the API server
 -->
@@ -613,7 +644,8 @@ Bearer token for authentication to the API server
 <td colspan="2">--user string</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">  
+<p>  
 <!--
 The name of the kubeconfig user to use
 -->
@@ -626,7 +658,8 @@ The name of the kubeconfig user to use
 <td colspan="2">--username string</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">  
+<p>  
 <!--
 Username for basic authentication to the API server
 -->
@@ -639,11 +672,12 @@ Username for basic authentication to the API server
 <td colspan="2">--version version[=true]</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">  
+<p>  
 <!--
 --version, --version=raw prints version information and quits; --version=vX.Y.Z... sets the reported version
 -->
---version, --version=raw 打印版本信息并退出；--version=vX.Y.Z... 设置报告的版本。
+--version, --version=raw 打印版本信息并退出；<code>--version=vX.Y.Z...</code> 设置报告的版本。
 </p>
 </td>
 </tr>
@@ -652,7 +686,8 @@ Username for basic authentication to the API server
 <td colspan="2">--warnings-as-errors</td>
 </tr>
 <tr>
-<td></td><td style="line-height: 130%; word-wrap: break-word;"><p>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">  
+<p>  
 <!--
 Treat warnings received from the server as errors and exit with a non-zero exit code
 -->

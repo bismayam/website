@@ -2,12 +2,16 @@
 title: kubectl create secret
 content_type: tool-reference
 weight: 30
+description: >-
+  使用指定的子命令创建 Secret
 ---
 <!--
 title: kubectl create secret
 content_type: tool-reference
 weight: 30
 auto_generated: true
+description: >-
+  Create a secret using a specified subcommand
 -->
 
 ## {{% heading "synopsis" %}}
@@ -116,9 +120,9 @@ UID to impersonate for the operation.
 <tr>
 <td></td><td style="line-height: 130%; word-wrap: break-word;">
 <p>
-<!--  
+<!--
 User extras to impersonate for the operation, this flag can be repeated to specify multiple values for the same key.
---> 
+-->
 用户额外信息，用于伪装操作，此标志可以重复使用，为同一个键指定多个值。
 </p>
 </td>
@@ -336,6 +340,20 @@ Name of the file to write the profile to
 </tr>
 
 <tr>
+<td colspan="2">--proxy-url string</td>
+</tr>
+<tr>
+<td></td><td style="line-height: 130%; word-wrap: break-word;">
+<p>  
+<!--  
+Proxy URL to use for requests to the API server
+-->
+用于向 API 服务器发送请求的代理 URL。
+</p>  
+</td>
+</tr>
+
+<tr>
 <td colspan="2">--request-timeout string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--Default:-->默认值："0"</td>
 </tr>
 <tr>
@@ -504,7 +522,8 @@ The name of the kubeconfig user to use
 Username for basic authentication to the API server
 -->
 对 API 服务器进行基本身份验证时所用的用户名。
-</p></td>
+</p>  
+</td>  
 </tr>
 
 <tr>
@@ -516,7 +535,8 @@ Username for basic authentication to the API server
 --version, --version=raw prints version information and quits; --version=vX.Y.Z... sets the reported version
 -->
 --version, --version=raw 打印版本信息并退出；--version=vX.Y.Z... 设置报告的版本。
-</p></td>
+</p>  
+</td>  
 </tr>
 
 <tr>
@@ -528,7 +548,8 @@ Username for basic authentication to the API server
 Treat warnings received from the server as errors and exit with a non-zero exit code
 -->
 将从服务器收到的警告视为错误，并以非零退出码退出。
-</p></td>
+</p>  
+</td>  
 </tr>
 
 </tbody>

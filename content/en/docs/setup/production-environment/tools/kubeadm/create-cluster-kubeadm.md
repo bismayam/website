@@ -40,7 +40,7 @@ To follow this guide, you need:
 You also need to use a version of `kubeadm` that can deploy the version
 of Kubernetes that you want to use in your new cluster.
 
-[Kubernetes' version and version skew support policy](/docs/setup/release/version-skew-policy/#supported-versions)
+[Kubernetes' version and version skew support policy](/releases/version-skew-policy/#supported-versions)
 applies to `kubeadm` as well as to Kubernetes overall.
 Check that policy to learn about what versions of Kubernetes and `kubeadm`
 are supported. This page is written for Kubernetes {{< param "version" >}}.
@@ -340,7 +340,7 @@ kubectl apply -f <add-on.yaml>
 
 {{< note >}}
 Only a few CNI plugins support Windows. More details and setup instructions can be found
-in [Adding Windows worker nodes](/docs/tasks/administer-cluster/kubeadm/adding-windows-nodes/#network-config).
+in [Adding Windows worker nodes](/docs/tasks/administer-cluster/kubeadm/adding-windows-nodes/#network-configuration).
 {{< /note >}}
 
 You can install only one Pod network per cluster.
@@ -357,10 +357,19 @@ for `kubeadm`.
 
 By default, kubeadm enables the [NodeRestriction](/docs/reference/access-authn-authz/admission-controllers/#noderestriction)
 admission controller that restricts what labels can be self-applied by kubelets on node registration.
-The admission controller documentation covers what labels are permitted to be used with the kubelet `--node-labels` option.
-The `node-role.kubernetes.io/control-plane` label is such a restricted label and kubeadm manually applies it using
-a privileged client after a node has been created. To do that manually you can do the same by using `kubectl label`
-and ensure it is using a privileged kubeconfig such as the kubeadm managed `/etc/kubernetes/admin.conf`.
+The admission controller documentation covers what labels are permitted to be used with the kubelet
+`--node-labels` option.
+
+{{< caution >}}
+Because of the `NodeRestriction` admission controller, you **cannot** use the kubelet
+`--node-labels` flag to apply restricted labels (such as `node-role.kubernetes.io/*`) during initialization.
+
+If you attempt to add restricted labels by using this kubelet flag, the node will fail to register
+with the API server.
+{{< /caution >}}
+
+To apply these labels manually, you must use `kubectl label` after the node has joined the cluster.
+Ensure you are using a privileged kubeconfig, such as the kubeadm-managed `/etc/kubernetes/admin.conf`.
 
 ### Control plane node isolation
 
@@ -424,7 +433,7 @@ and `scp` using that other user instead.
 
 The `admin.conf` file gives the user _superuser_ privileges over the cluster.
 This file should be used sparingly. For normal users, it's recommended to
-generate an unique credential to which you grant privileges. You can do
+generate a unique credential to which you grant privileges. You can do
 this with the `kubeadm kubeconfig user --client-name <CN>`
 command. That command will print out a KubeConfig file to STDOUT which you
 should save to a file and distribute to your user. After that, grant
@@ -616,6 +625,6 @@ If you are running into difficulties with kubeadm, please consult our
   [#kubeadm](https://kubernetes.slack.com/messages/kubeadm/) Slack channel
 * General SIG Cluster Lifecycle development Slack channel:
   [#sig-cluster-lifecycle](https://kubernetes.slack.com/messages/sig-cluster-lifecycle/)
-* SIG Cluster Lifecycle [SIG information](https://github.com/kubernetes/community/tree/master/sig-cluster-lifecycle#readme)
+* SIG Cluster Lifecycle [SIG information](https://github.com/kubernetes/community/tree/main/sig-cluster-lifecycle#readme)
 * SIG Cluster Lifecycle mailing list:
   [kubernetes-sig-cluster-lifecycle](https://groups.google.com/forum/#!forum/kubernetes-sig-cluster-lifecycle)

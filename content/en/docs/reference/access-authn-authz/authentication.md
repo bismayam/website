@@ -48,6 +48,9 @@ a human user typing `kubectl` on a workstation, to `kubelets` on nodes, to membe
 of the control plane, must authenticate when making requests to the API server,
 or be treated as an anonymous user.
 
+If you attempt to authenticate and it succeeds, the API server automatically
+marks that you are a member of the special group `system:authenticated`.
+
 ## Authentication strategies
 
 Kubernetes uses client certificates, bearer tokens, or an authenticating proxy to
@@ -123,18 +126,24 @@ anonymously, even if your authorization configuration would allow it.
 
 You can enable multiple authentication methods at once. You should usually use at least two methods:
 
-- service account tokens for service accounts
-- at least one other method for user authentication.
+- [service account tokens](/docs/concepts/security/service-accounts/#authenticating-credentials) for ServiceAccounts
+- at least one other method for (normal) user authentication
+
+Available authentication methods include:
+
+* [X.509 client certificates](#x509-client-certificates)
+* [Bootstrap tokens](#bootstrap-tokens)
+* [Service account tokens](#service-account-tokens)
+* [Static token file](#static-token-file)
+* [External integrations](#external-integrations)
+  * [JSON Web Tokens](#json-web-token-authentication)
+  * [OpenID Connect Tokens](#openid-connect-tokens)
+  * [Webhook token authentication](#webhook-token-authentication)
+  * [Authenticating reverse proxy](#authenticating-proxy)
 
 When multiple authenticator modules are enabled, the first module
 to successfully authenticate the request short-circuits evaluation.
 The API server does not guarantee the order authenticators run in.
-
-The `system:authenticated` group is included in the list of groups for all authenticated users.
-
-[Integrations](#external-integrations) with other authentication protocols (LDAP, SAML, Kerberos, alternate x509 schemes, etc)
-are available; for example using an [authenticating proxy](#authenticating-proxy) or the
-[authentication webhook](#webhook-token-authentication).
 
 ### X.509 client certificates {#x509-client-certificates}
 
@@ -301,19 +310,22 @@ bearer tokens to verify requests. The plugin takes two optional flags:
   different files. If unspecified, --tls-private-key-file is used.
 * `--service-account-lookup` If enabled, tokens which are deleted from the API will be revoked.
 
-Service accounts are usually created automatically by the API server and
+[ServiceAccounts](/docs/concepts/security/service-accounts/)
+are usually created automatically by the API server and are
 associated with pods running in the cluster through the `ServiceAccount`
-[Admission Controller](/docs/reference/access-authn-authz/admission-controllers/). Bearer tokens are
-mounted into pods at well-known locations, and allow in-cluster processes to
-talk to the API server. Accounts may be explicitly associated with pods using the
-`serviceAccountName` field of a `PodSpec`.
+[Admission Controller](/docs/reference/access-authn-authz/admission-controllers/).
+Bearer tokens are mounted into pods at well-known locations, and allow in-cluster clients to
+authenticate to the API server. ServiceAccounts may be explicitly associated with Pods using
+the `serviceAccountName` field within the `spec` of a Pod.
 
 {{< note >}}
 `serviceAccountName` is usually omitted because this is done automatically.
 {{< /note >}}
 
+Here is a (partial) manifest for a Deployment that runs as a ServiceAccount named bob-the-bot:
+
 ```yaml
-apiVersion: apps/v1 # this apiVersion is relevant as of Kubernetes 1.9
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment

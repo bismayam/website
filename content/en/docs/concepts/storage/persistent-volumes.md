@@ -55,7 +55,7 @@ offer a variety of PersistentVolumes that differ in more ways than size and acce
 modes, without exposing users to the details of how those volumes are implemented.
 For these needs, there is the _StorageClass_ resource.
 
-See the [detailed walkthrough with working examples](/docs/tasks/configure-pod-container/configure-persistent-volume-storage/).
+See the [detailed walkthrough with working examples](/docs/tutorials/configuration/configure-persistent-volume-storage).
 
 ## Lifecycle of a volume and claim
 
@@ -382,7 +382,7 @@ Support for expanding PersistentVolumeClaims (PVCs) is enabled by default. You c
 the following types of volumes:
 
 * {{< glossary_tooltip text="csi" term_id="csi" >}} (including some CSI migrated
-volme types)
+volume types)
 * flexVolume (deprecated)
 * portworxVolume (deprecated)
 
@@ -499,52 +499,53 @@ Kubernetes does not support shrinking a PVC to less than its current size.
 PersistentVolume types are implemented as plugins. Kubernetes currently supports the following plugins:
 
 * [`csi`](/docs/concepts/storage/volumes/#csi) - Container Storage Interface (CSI)
-* [`fc`](/docs/concepts/storage/volumes/#fc) - Fibre Channel (FC) storage
-* [`hostPath`](/docs/concepts/storage/volumes/#hostpath) - HostPath volume
+* [`fc`](/docs/reference/storage/volume-types/#fc) - Fibre Channel (FC) storage
+* [`hostPath`](/docs/reference/storage/volume-types/#hostpath) - HostPath volume
   (for single node testing only; WILL NOT WORK in a multi-node cluster;
   consider using `local` volume instead)
-* [`iscsi`](/docs/concepts/storage/volumes/#iscsi) - iSCSI (SCSI over IP) storage
-* [`local`](/docs/concepts/storage/volumes/#local) - local storage devices
+* [`iscsi`](/docs/reference/storage/volume-types/#iscsi) - iSCSI (SCSI over IP) storage
+* [`local`](/docs/reference/storage/volume-types/#local) - local storage devices
   mounted on nodes.
-* [`nfs`](/docs/concepts/storage/volumes/#nfs) - Network File System (NFS) storage
+* [`nfs`](/docs/reference/storage/volume-types/#nfs) - Network File System (NFS) storage
 
-The following types of PersistentVolume are deprecated but still available.
-If you are using these volume types except for `flexVolume`, `cephfs` and `rbd`,
-please install corresponding CSI drivers.
+The in-tree drivers for the following PersistentVolume types have been **removed** as of the versions listed below.  Kubernetes now redirects their operations to the matching CSI driver.  Please install the corresponding [CSI driver](/docs/concepts/storage/volumes/#migrating-to-csi-drivers-from-in-tree-plugins).
 
-* [`awsElasticBlockStore`](/docs/concepts/storage/volumes/#awselasticblockstore) - AWS Elastic Block Store (EBS)
-  (**migration on by default** starting v1.23)
-* [`azureDisk`](/docs/concepts/storage/volumes/#azuredisk) - Azure Disk
-  (**migration on by default** starting v1.23)
-* [`azureFile`](/docs/concepts/storage/volumes/#azurefile) - Azure File
-  (**migration on by default** starting v1.24)
-* [`cinder`](/docs/concepts/storage/volumes/#cinder) - Cinder (OpenStack block storage)
-  (**migration on by default** starting v1.21)
+* [`awsElasticBlockStore`](/docs/reference/storage/volume-types/#awselasticblockstore) - AWS Elastic Block Store (EBS)
+  (**removed** in v1.27)
+* [`azureDisk`](/docs/reference/storage/volume-types/#azuredisk) - Azure Disk
+  (**removed** in v1.27)
+* [`azureFile`](/docs/reference/storage/volume-types/#azurefile) - Azure File
+  (**removed** in v1.30)
+* [`cinder`](/docs/reference/storage/volume-types/#cinder) - Cinder (OpenStack block storage)
+  (**removed** in v1.26)
+* [`gcePersistentDisk`](/docs/reference/storage/volume-types/#gcepersistentdisk) - GCE Persistent Disk
+  (**removed** in v1.28)
+* [`portworxVolume`](/docs/reference/storage/volume-types/#portworxvolume) - Portworx volume
+  (**removed** in v1.36)
+* [`vsphereVolume`](/docs/reference/storage/volume-types/#vspherevolume) - vSphere VMDK volume
+  (**removed** in v1.30)
+
+The `flexVolume` PersistentVolume type is deprecated, but remains supported without CSI migration.
+
 * [`flexVolume`](/docs/concepts/storage/volumes/#flexvolume) - FlexVolume
   (**deprecated** starting v1.23, no migration plan and no plan to remove support)
-* [`gcePersistentDisk`](/docs/concepts/storage/volumes/#gcePersistentDisk) - GCE Persistent Disk
-  (**migration on by default** starting v1.23)
-* [`portworxVolume`](/docs/concepts/storage/volumes/#portworxvolume) - Portworx volume
-  (**migration on by default** starting v1.31)
-* [`vsphereVolume`](/docs/concepts/storage/volumes/#vspherevolume) - vSphere VMDK volume
-  (**migration on by default** starting v1.25)
 
 Older versions of Kubernetes also supported the following in-tree PersistentVolume types:
 
-* [`cephfs`](/docs/concepts/storage/volumes/#cephfs)
+* [`cephfs`](/docs/reference/storage/volume-types/#cephfs)
   (**not available** starting v1.31)
 * `flocker` - Flocker storage.
   (**not available** starting v1.25)
 * `glusterfs` - GlusterFS storage.
   (**not available** starting v1.26)
 * `photonPersistentDisk` - Photon controller persistent disk.
-  (**not available** starting v1.15)
+  (**not available** starting v1.16)
 * `quobyte` - Quobyte volume.
   (**not available** starting v1.25)
-* [`rbd`](/docs/concepts/storage/volumes/#rbd) - Rados Block Device (RBD) volume 
+* [`rbd`](/docs/reference/storage/volume-types/#rbd) - Rados Block Device (RBD) volume 
   (**not available** starting v1.31)
 * `scaleIO` - ScaleIO volume.
-  (**not available** starting v1.21)
+  (**not available** starting v1.22)
 * `storageos` - StorageOS volume.
   (**not available** starting v1.25)
 
@@ -733,7 +734,7 @@ it will become fully deprecated in a future Kubernetes release.
 
 {{< note >}}
 For most volume types, you do not need to set this field.
-You need to explicitly set this for [local](/docs/concepts/storage/volumes/#local) volumes.
+You need to explicitly set this for [local](/docs/reference/storage/volume-types/#local) volumes.
 {{< /note >}}
 
 A PV can specify node affinity to define constraints that limit what nodes this
@@ -937,6 +938,42 @@ there is no default causes PVCs without `storageClassName` created at that time
 to not have any default, but due to the retroactive default StorageClass
 assignment this way of changing defaults is safe.
 
+### Unused PVC tracking
+
+{{< feature-state feature_gate_name="PersistentVolumeClaimUnusedSinceTime" >}}
+
+When enabled, the PVC protection controller adds an `Unused`
+[condition](/docs/concepts/workloads/pods/pod-lifecycle/#pod-conditions) to each
+PersistentVolumeClaim to indicate whether it is currently referenced by any
+non-terminal Pod.
+
+The condition has two states:
+
+`Unused` with status `"True"` (reason `NoPodsUsingPVC`)
+: No non-terminal Pod references this PVC. The `lastTransitionTime` records when
+  the PVC became unused.
+
+`Unused` with status `"False"` (reason `PodUsingPVC`)
+: At least one non-terminal Pod currently references this PVC. The
+  `lastTransitionTime` records when the PVC started being used.
+
+A Pod is considered non-terminal if its phase is not `Succeeded` or `Failed`.
+This means that a Pending Pod (even one that has not yet been scheduled) counts
+as using the PVC.
+
+The `lastTransitionTime` of the `Unused` condition can be used by cluster
+administrators, monitoring tools, and external controllers to identify PVCs that
+have been unused for a long time. For example, to find all PVCs that have been
+unused for more than 30 days, you could query for PVCs where the `Unused`
+condition has `status: "True"` and `lastTransitionTime` is older than 30 days.
+
+{{< note >}}
+The unused duration indicated by this condition may be shorter than the actual
+unused time because of processing delays in the controller or because the
+feature was enabled after the PVC was already unused. The condition is not
+updated when a PVC has `deletionTimestamp` set (that is, PVCs that are being deleted).
+{{< /note >}}
+
 ## Claims As Volumes
 
 Pods access storage by using the claim as a volume. Claims must exist in the
@@ -972,7 +1009,8 @@ possible within one namespace.
 
 A `hostPath` PersistentVolume uses a file or directory on the Node to emulate
 network-attached storage. See
-[an example of `hostPath` typed volume](/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume).
+[an example of `hostPath` typed volume](/docs/tutorials/configuration/configure-persistent-volume-storage/#create-a-persistentvolume).
+
 
 ## Raw Block Volume Support
 
@@ -1083,7 +1121,7 @@ Volume snapshots only support the out-of-tree CSI volume plugins.
 For details, see [Volume Snapshots](/docs/concepts/storage/volume-snapshots/).
 In-tree volume plugins are deprecated. You can read about the deprecated volume
 plugins in the
-[Volume Plugin FAQ](https://github.com/kubernetes/community/blob/master/sig-storage/volume-plugin-faq.md).
+[Volume Plugin FAQ](https://github.com/kubernetes/community/blob/main/sig-storage/volume-plugin-faq.md).
 
 ### Create a PersistentVolumeClaim from a Volume Snapshot {#create-persistent-volume-claim-from-volume-snapshot}
 
@@ -1131,77 +1169,11 @@ spec:
 
 ## Volume populators and data sources
 
-{{< feature-state for_k8s_version="v1.24" state="beta" >}}
-
-Kubernetes supports custom volume populators.
-To use custom volume populators, you must enable the `AnyVolumeDataSource`
-[feature gate](/docs/reference/command-line-tools-reference/feature-gates/) for
-the kube-apiserver and kube-controller-manager.
-
-Volume populators take advantage of a PVC spec field called `dataSourceRef`. Unlike the
-`dataSource` field, which can only contain either a reference to another PersistentVolumeClaim
-or to a VolumeSnapshot, the `dataSourceRef` field can contain a reference to any object in the
-same namespace, except for core objects other than PVCs. For clusters that have the feature
-gate enabled, use of the `dataSourceRef` is preferred over `dataSource`.
-
-## Cross namespace data sources
-
-{{< feature-state for_k8s_version="v1.26" state="alpha" >}}
-
-Kubernetes supports cross namespace volume data sources.
-To use cross namespace volume data sources, you must enable the `AnyVolumeDataSource`
-and `CrossNamespaceVolumeDataSource`
-[feature gates](/docs/reference/command-line-tools-reference/feature-gates/) for
-the kube-apiserver and kube-controller-manager.
-Also, you must enable the `CrossNamespaceVolumeDataSource` feature gate for the csi-provisioner.
-
-Enabling the `CrossNamespaceVolumeDataSource` feature gate allows you to specify
-a namespace in the dataSourceRef field.
-
-{{< note >}}
-When you specify a namespace for a volume data source, Kubernetes checks for a
-ReferenceGrant in the other namespace before accepting the reference.
-ReferenceGrant is part of the `gateway.networking.k8s.io` extension APIs.
-See [ReferenceGrant](https://gateway-api.sigs.k8s.io/api-types/referencegrant/)
-in the Gateway API documentation for details.
-This means that you must extend your Kubernetes cluster with at least ReferenceGrant from the
-Gateway API before you can use this mechanism.
-{{< /note >}}
-
-## Data source references
-
-The `dataSourceRef` field behaves almost the same as the `dataSource` field. If one is
-specified while the other is not, the API server will give both fields the same value. Neither
-field can be changed after creation, and attempting to specify different values for the two
-fields will result in a validation error. Therefore the two fields will always have the same
-contents.
-
-There are two differences between the `dataSourceRef` field and the `dataSource` field that
-users should be aware of:
-
-* The `dataSource` field ignores invalid values (as if the field was blank) while the
-  `dataSourceRef` field never ignores values and will cause an error if an invalid value is
-  used. Invalid values are any core object (objects with no apiGroup) except for PVCs.
-* The `dataSourceRef` field may contain different types of objects, while the `dataSource` field
-  only allows PVCs and VolumeSnapshots.
-
-When the `CrossNamespaceVolumeDataSource` feature is enabled, there are additional differences:
-
-* The `dataSource` field only allows local objects, while the `dataSourceRef` field allows
-  objects in any namespaces.
-* When namespace is specified, `dataSource` and `dataSourceRef` are not synced.
-
-Users should always use `dataSourceRef` on clusters that have the feature gate enabled, and
-fall back to `dataSource` on clusters that do not. It is not necessary to look at both fields
-under any circumstance. The duplicated values with slightly different semantics exist only for
-backwards compatibility. In particular, a mixture of older and newer controllers are able to
-interoperate because the fields are the same.
-
-### Using volume populators
-
-Volume populators are {{< glossary_tooltip text="controllers" term_id="controller" >}} that can
-create non-empty volumes, where the contents of the volume are determined by a Custom Resource.
-Users create a populated volume by referring to a Custom Resource using the `dataSourceRef` field:
+[Volume cloning](#volume-cloning) and
+[snapshot restore](#volume-snapshot-and-restore-volume-from-snapshot-support) pre-populate
+a new volume from a built-in _data source_. _Volume populators_ extend this mechanism so that
+a PersistentVolumeClaim can be pre-populated from other kinds of source (a custom resource),
+referenced through its `dataSourceRef` field:
 
 ```yaml
 apiVersion: v1
@@ -1220,63 +1192,8 @@ spec:
       storage: 10Gi
 ```
 
-Because volume populators are external components, attempts to create a PVC that uses one
-can fail if not all the correct components are installed. External controllers should generate
-events on the PVC to provide feedback on the status of the creation, including warnings if
-the PVC cannot be created due to some missing component.
-
-You can install the alpha [volume data source validator](https://github.com/kubernetes-csi/volume-data-source-validator)
-controller into your cluster. That controller generates warning Events on a PVC in the case that no populator
-is registered to handle that kind of data source. When a suitable populator is installed for a PVC, it's the
-responsibility of that populator controller to report Events that relate to volume creation and issues during
-the process.
-
-### Using a cross-namespace volume data source
-
-{{< feature-state for_k8s_version="v1.26" state="alpha" >}}
-
-Create a ReferenceGrant to allow the namespace owner to accept the reference.
-You define a populated volume by specifying a cross namespace volume data source
-using the `dataSourceRef` field. You must already have a valid ReferenceGrant
-in the source namespace:
-
-   ```yaml
-   apiVersion: gateway.networking.k8s.io/v1beta1
-   kind: ReferenceGrant
-   metadata:
-     name: allow-ns1-pvc
-     namespace: default
-   spec:
-     from:
-     - group: ""
-       kind: PersistentVolumeClaim
-       namespace: ns1
-     to:
-     - group: snapshot.storage.k8s.io
-       kind: VolumeSnapshot
-       name: new-snapshot-demo
-   ```
-
-   ```yaml
-   apiVersion: v1
-   kind: PersistentVolumeClaim
-   metadata:
-     name: foo-pvc
-     namespace: ns1
-   spec:
-     storageClassName: example
-     accessModes:
-     - ReadWriteOnce
-     resources:
-       requests:
-         storage: 1Gi
-     dataSourceRef:
-       apiGroup: snapshot.storage.k8s.io
-       kind: VolumeSnapshot
-       name: new-snapshot-demo
-       namespace: default
-     volumeMode: Filesystem
-   ```
+For details, including cross-namespace data sources, see
+[Volume Populators and Data Sources](/docs/concepts/storage/volume-populators-and-data-sources/).
 
 ## Writing Portable Configuration
 
@@ -1306,8 +1223,8 @@ and need persistent storage, it is recommended that you use the following patter
 
 ## {{% heading "whatsnext" %}}
 
-* Learn more about [Creating a PersistentVolume](/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolume).
-* Learn more about [Creating a PersistentVolumeClaim](/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim).
+* Learn more about [Creating a PersistentVolume](/docs/tutorials/configuration/configure-persistent-volume-storage/#create-a-persistentvolume).
+* Learn more about [Creating a PersistentVolumeClaim](/docs/tutorials/configuration/configure-persistent-volume-storage/#create-a-persistentvolumeclaim).
 * Read the [Persistent Storage design document](https://git.k8s.io/design-proposals-archive/storage/persistent-storage.md).
 
 ### API references {#reference}

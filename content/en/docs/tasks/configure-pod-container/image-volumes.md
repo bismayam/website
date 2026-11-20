@@ -20,7 +20,6 @@ mount content from OCI registries inside containers.
 - The container runtime needs to support the image volumes feature
 - You need to exec commands in the host
 - You need to be able to exec into pods
-- You need to enable the `ImageVolume` [feature gate](/docs/reference/command-line-tools-reference/feature-gates/)
 
 <!-- steps -->
 
@@ -102,4 +101,4 @@ from Kubernetes v1.33 when using the image volume feature.
 
 ## Further reading
 
-- [`image` volumes](/docs/concepts/storage/volumes/#image)
+- [`image` volumes](/docs/reference/storage/volume-types/#image)

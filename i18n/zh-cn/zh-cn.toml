@@ -235,6 +235,24 @@ href="https://www.oreilly.com/content/oreilly-acquires-katacoda-and-a-new-way-fo
 <p>Kubernetes 衷心感谢 O'Reilly 和 Katacoda 多年来帮助人们迈出学习 Kubernetes 的第一步。</p>
 <p>教程将在<b>2023 年 3 月 31 日</b>后停止运行。更多信息，请参阅 "<a href="/zh-cn/blog/2023/02/14/kubernetes-katacoda-tutorials-stop-from-2023-03-31/">免费的 Katacoda Kubernetes 教程即将关闭</a>。"</p>"""
 
+[kubecon_region_china]
+other = "中国"
+
+[kubecon_region_europe]
+other = "欧洲"
+
+[kubecon_region_event]
+other = "大会"
+
+[kubecon_region_india]
+other = "印度"
+
+[kubecon_region_japan]
+other = "日本"
+
+[kubecon_region_north_america]
+other = "北美"
+
 [latest_release]
 other = "最新发行版本："
 
@@ -614,7 +632,7 @@ other="""第三方内容建议"""
 other = """&#128711; 本条目指向第三方项目或产品，而该项目（产品）不是 Kubernetes 的一部分。<a class="alert-more-info" href="#third-party-content-disclaimer">更多信息</a>"""
 
 [thirdparty_message_disclaimer]
-other = """<p>本页面中的条目引用了第三方产品或项目，这些产品（项目）提供了 Kubernetes 所需的功能。Kubernetes 项目的开发人员不对这些第三方产品（项目）负责。请参阅<a href="https://github.com/cncf/foundation/blob/main/policies-guidance/website-guidelines.md" target="_blank">CNCF 网站指南</a>了解更多细节。</p><p>在提交更改建议，向本页添加新的第三方链接之前，你应该先阅读<a href="/zh-cn/docs/contribute/style/content-guide/#third-party-content">内容指南。</p>"""
+other = """<p>本页面中的条目引用了第三方产品或项目，这些产品（项目）提供了 Kubernetes 所需的功能。Kubernetes 项目的开发人员不对这些第三方产品（项目）负责。请参阅<a href="https://github.com/cncf/foundation/blob/main/policies-guidance/website-guidelines.md" target="_blank">CNCF 网站指南</a>了解更多细节。</p><p>在提交更改建议，向本页添加新的第三方链接之前，你应该先阅读<a href="/zh-cn/docs/contribute/style/content-guide/#third-party-content">内容指南。</a></p>"""
 
 [thirdparty_message_vendor]
 other = """本页面中的条目引用了 Kubernetes 外部的供应商。Kubernetes 项目的开发人员不对这些第三方产品（项目）负责。要将供应商、产品或项目添加到此列表中，请在提交更改之前阅读<a href="/zh-cn/docs/contribute/style/content-guide/#third-party-content">内容指南</a>。<a href="#third-party-content-disclaimer">更多信息。</a>"""

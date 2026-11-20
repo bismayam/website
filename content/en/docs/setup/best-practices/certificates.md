@@ -57,8 +57,8 @@ In this scenario, there are two approaches for certificate usage:
   `kubelet-client.key` are created.
 
 {{< note >}}
-`front-proxy` certificates are required only if you run kube-proxy to support
-[an extension API server](/docs/tasks/extend-kubernetes/setup-extension-api-server/).
+`front-proxy` certificates are required only when using the API server aggregation layer
+to support [an extension API server](/docs/tasks/extend-kubernetes/setup-extension-api-server/).
 {{< /note >}}
 
 etcd also implements mutual TLS to authenticate clients and peers.
@@ -130,7 +130,7 @@ the load balancer stable IP and/or DNS name, `kubernetes`, `kubernetes.default`,
 `kubernetes.default.svc.cluster`, `kubernetes.default.svc.cluster.local`)
 
 where `kind` maps to one or more of the x509 key usage, which is also documented in the
-`.spec.usages` of a [CertificateSigningRequest](/docs/reference/kubernetes-api/authentication-resources/certificate-signing-request-v1#CertificateSigningRequest)
+`.spec.usages` of a [CertificateSigningRequest](/docs/reference/kubernetes-api/certificates/certificate-signing-request-v1/#CertificateSigningRequest)
 type:
 
 | kind   | Key usage                                                                       |
